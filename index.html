@@ -42,6 +42,285 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
+                <section>
+                    <h1>Who's afraid of the big bad preloader?</h1>
+                </section>
+                <section>
+                    <h2>What are we doing here?</h2>
+                    <img src="resources/what-year-is-it-robin-williams_super.jpg">
+                    <aside class="notes">
+                        <p>I'm Yoav Weiss. I've been working on Web performance stuff for the last 15 years and on 
+                        responsive images implementation in Blink &amp; WebKit in the last 2 years.</p>
+                        <p>As a web performance engineer, the arrival of the preloader really changed the way we had to think about Web
+                        performance, and improved the load times of not-so-optimized web sites significantly.</p>
+                        <p>Yet when I was talking about responsive images in last year's velocity, and asked the audience "who knows what is
+                        the browser's preloader", only Steve raised his hand. That made me think that we're not talking about this
+                        enough.</p>
+                        <p>Also as part of my responsive images work, I had to fiddle quite a lot with the preloader on the one hand, and
+                        manage mailing list flames on the other, from developers who thought that it's a "mindless optimization" that's
+                        "holding us back".</p>
+                        <p>So I'm here to talk a little about what is the preloader, what it does, and why we need it. Badly.</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Once upon a time</h2>
+                    <aside class="notes">
+                        So, once upon a time in a land far far away, browsers were fetching Web
+                        pages.
+                    </aside>
+                </section>
+                <section>
+                    <h2>HTML</h2>
+                    <aside class="notes">
+                        The way they were doing that was that a user would typein a URL, or go
+                        to a link. The browser would then fetch the HTML and start parsing it and creating a DOM tree.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Subresource</h2>
+                    <aside class="notes">
+                        Once it DOM element the requires to download a subresource was created that needs downloading, the subresource would be added 
+                        to the download queue, and the parser continued parsing out more resources.
+                    </aside>
+                </section>
+                <section>
+                    <h2>SUPER subresources!</h2>
+                    <aside class="notes">
+                        But, when the parser created a script element,
+                        it would halt and wait for all the resources that
+                        may impact running of this javascript (including the script itself) to download, get
+                        evaluated and executed, before it would continue the parsing work.
+                    </aside>
+                </section>
+                <section>
+                    <h2>SLOW!</h2>
+                    <aside class="notes">
+                        That meant that for pages with multiple external scripts and CSS files
+                        (which is the lot of them), the resource downloading process was
+                        extremely inefficient.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Frustration</h2>
+                    <aside class="notes">
+                        <p>Users got frustrated by the waiting. </p>
+                        <p>Web developers got frustrated by their poor performing sites. </p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Workarounds</h2>
+                    <aside class="notes">
+                        <p>Books were written with workaround techniques &amp; best practices:</p>
+                        <p>Minimizing the number of CSS and JS requests, putting scripts at the bottom, etc</p>
+                        <p>Those are still good practices in an HTTP/1.1 world, but in pre-preloader days, their impact was HUGE</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>A native solution</h2>
+                    <aside class="notes">
+                        <p>And evetually, browsers decided to do something about it.</p>
+                        <p>Around 2007-2008, browsers added, each on its own, a mechanism called
+                        the preloader.</p>
+                        <p>Well, no one actually called it the preloader. IE called it the
+                        look ahead parser, Firefox called it the speculative parser, and in
+                        WebKit it was called the preloadScanner.</p>
+                        <p>I like to call it the preloader, since it's a vendor neutral term, and it describes what it does, preload
+                        resources</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Basic idea</h2>
+                    <aside class="notes">
+                        <p>The different implementations were different, but the basic idea behind
+                        them was the same. </p>
+                        <p>Peek into the HTML coming in from the network and
+                        start an early fetch of the resources that will most probably be requested later on.</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>What's with the blocking, man???</h2>
+                    <aside class="notes">
+                        So why is the parser blocked on scripts anyway?
+                    </aside>
+                </section>
+                <section>
+                    <h2>DOM state</h2>
+                    <aside class="notes">
+                        <p>Synchronous scripts may expect the DOM to be in a certain state</p>
+                        <p>JavaScript can alter the HTML, which means that the parser can
+                          reliably continue parsing, adding stuff to the DOM and only then run
+                          the javascript.</p>
+                          <p> That may cause the javascript to break (since it
+                          rightfully expecting the DOM to be in a certain state when it runs).</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>document.write</h2>
+                    <pre><code>&lt;script&gt;document.write("&lt;!--");&lt;/script&gt
+&lt;div&gt;...</code></pre>
+                    <aside class="notes">
+                        scripts can alter the HTML, which means creating the "future" DOM may become irrelevant
+                    </aside>
+                </section>
+                <section>
+                    <h2>Style queries</h2>
+                    <pre><code>&lt;script&gt;var width = document.getElementById("thing").width();&lt;/script&gt</code></pre>
+                    <aside class="notes">
+                        <p>Javascripts (both internal and external) can look into style
+                        information on the current DOM. </p>
+                        <p>That means that if the external CSS wasn't fully downloaded, the browser have to wait for it to arrive, and
+                        apply it, before running scripts that are later on in the page.</p>
+                        <p>Some browsers optimized that to do that only when scripts actually
+                        include such directives, while others didn't bother with it (citation needed).</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>How does it work?</h2>
+                    <aside class="notes">
+                        <p>Despite rumors, the preloader is not some weird regex engine, it doesn't look into the raw bytes, etc, etc.</p>
+                        <p>In order to explain the preloader, a quick detour into how HTML parsing
+                        works - what happens between the time that the browser gets the HTML as
+                        bytes on the wire(less) and the time it has a complete DOM tree.</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Tokenization</h2>
+                    <aside class="notes">
+                        <p>Before parsing can start, the browser turns the incoming bytes into characters, and turns these characters into
+                        tokens in a process that's called tokenization.</p>
+                        <p>A token represents an HTML tag, its name, its attributes and their values</p>
+                        <p>But a token doesn't really know anything about HTML's rules (which tags auto close, which tags can be nested
+                        inside other tags, etc)</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Parsing</h2>
+                    <aside class="notes">
+                        <p>The parser then takes these tokens and creates a DOM tree from them, while applying the specced HTML parsing
+                        rules.</p>
+                        <p>Unlike tokenization, since the parser is building the DOM tree, it must run on the main thread</p>
+                        <p>The tokenizer may or may not run on a background thread</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Where does the preloader fit in?</h2>
+                    <aside class="notes">
+                        <p>The preloader steps in between the tokenization phase and the parsing phase.</p>
+                        <p>It feeds off serialized tokens (so basically complete HTML tags), and concludes from them which resources are
+                        likely to be needed later on, and the type of such resources</p>
+                        <p>So the preloader has no notion of a DOM tree, or nesting, but it can keep track of tags, ignore comments, etc</p>
+                        <p>After it's done with the tokens, it just passes them on to the parser</p>
+                        <p>Like the tokenizer, the preloader may be off the main thread</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Which resources?</h2>
+                    <aside class="notes">
+                        <p>All of them fetch scripts, CSS and images</p>
+                        <p>XXXXXXXXXX - add some stuff that aren't prefetched in some browsers</p>
+                        <p>XXXXXXXXXX - add some stuff that aren't prefetched anywhere</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Priorities</h2>
+                </section>
+                <section>
+                    <h2>Spec???</h2>
+                    <aside class="notes">
+                        <p>There is no preloader spec since it's an optimization that does not have any compatibility implications</p>
+                        <p>The fact that it isn't specced allows browsers to rapidly innovate in that area, and come up with faster priority
+                        schemes, etc</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Whould should devs know?</h2>
+                </section>
+                <section>
+                    <h2>Preloaders don't see into JS</h2>
+                </section>
+                <section>
+                    <h2>Make sure that all resources that should be preloaded are visible</h2>
+                </section>
+                <section>
+                    <h2>Make sure that resources you don't want preloaded, aren't visible</h2>
+                </section>
+                <section>
+                    <h2>Assume nothing</h2>
+                    <aside class="notes">
+                        <p>The network download order of resource can and will change between browsers and browser versions.</p>
+                        <p>Make your peace with it</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Assumption fail</h2>
+                    <aside class="notes">
+                        XXXXXXX - The cookie example
+                    </aside>
+                </section>
+                <section>
+                    <h2>assumption #2</h2>
+                    <aside class="notes">
+                        XXXXXXXXxx - scripts at the bottom downloaded before images
+                    </aside>
+                </section>
+                <section>
+                    <h2>Myths debunked</h2>
+                </section>
+                <section>
+                    <h2>Can't deal with MQs</h2>
+                    <aside class="notes">
+                        Used to be true. I fixed that. You welcome
+                    </aside>
+                </section>
+                <section>
+                    <h2>Limits ability to modify resource URLs</h2>
+                    <aside class="notes">
+                        That was never possible, regardless of preloader.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Prevents dirty hacks</h2>
+                </section>
+                <section>
+                    <h2>Future improvements</h2>
+                    <aside class="notes">
+                        <p>Now let's talk about what can be improved in the preloader.</p>
+                        <p>So it's more of a "possible future" or "future wherein someone will give me time to work on that"</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Direct connection off-main-thread</h2>
+                    <aside class="notes">
+                        That's mostly true for Gecko and Blink.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Better CSS support</h2>
+                    <aside class="notes">
+                        <p>Blink &amp; WebKit currently support @import fetching for internal style tags.</p>
+                        <p>Other browsers should also support that</p>
+                        <p>@import support in external scripts in underway in Blink, thanks to Johny Rein from Opera</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Fonts</h2>
+                </section>
+                <section>
+                    <h2>Background images</h2>
+                </section>
+                <section>
+                    <h2>Resource priorities</h2>
+                </section>
+                <section>
+                    <h2>Preloader hints</h2>
+                </section>
+                <section>
+                    <h2>To sum it up</h2>
+                    <aside class="notes">
+                    The preloader is your friend. Be kind to it, and he'd be kind to you.
+                    </aside>
+                </section>
+                <!--
 				<section>
 					<h1>Reveal.js</h1>
 					<h3>HTML Presentations Made Easy</h3>
@@ -62,7 +341,6 @@
 					</aside>
 				</section>
 
-				<!-- Example of nested vertical slides -->
 				<section>
 					<section>
 						<h2>Vertical Slides</h2>
@@ -352,6 +630,7 @@ function linkify( selector ) {
 					<h1>THE END</h1>
 					<h3>BY Hakim El Hattab / hakim.se</h3>
 				</section>
+                -->
 
 			</div>
 
