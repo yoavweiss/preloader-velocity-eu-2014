@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>Yoav Weiss - Who's afraid of the big bad preloader</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -30,6 +30,29 @@
 				document.getElementsByTagName( 'head' )[0].appendChild( link );
 			}
 		</script>
+        <style>
+            .reveal .credits { font-size:24px; float: right; }
+            .reveal .bright { color: white; background: rgba(128, 128, 128, 0.8);}
+            .reveal .dark { color: black; background: rgba(128, 128, 128, 0.8);}
+            .reveal .bottom { margin-top: 250px;}
+            .reveal h1.bright, .reveal h2.bright { padding-bottom: 20px; }
+            code span.highlight {font-weight: bold; font-size: 1.4em;}
+            .reveal code {font-size: 1.2em; width: 120%;margin-left: -10%;line-height: 1.3em;}
+            h1.large { font-size: 8em; }
+
+            // Thanks to http://stackoverflow.com/questions/2539207/how-to-change-the-strike-out-line-through-thickness-in-css
+            .strikeout {
+                position: relative;
+            }
+            .strikeout::after {
+                border-bottom: 7px solid black;
+                content: "";
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 60%;
+            }
+        </style>
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
