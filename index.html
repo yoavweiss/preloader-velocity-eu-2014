@@ -52,6 +52,7 @@
                 right: 0;
                 top: 60%;
             }
+            .reveal section img {border: none;}
         </style>
 
 		<!--[if lt IE 9]>
@@ -64,14 +65,19 @@
 		<div class="reveal">
 
 			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-                <section>
-                    <h1>Who's afraid of the big bad preloader?</h1>
+			<div class="slides" >
+                <section data-background="cc_resources/big_bad_wolf.jpg">
+                    <h1 class=bright>Who's afraid of the big bad preloader?</h1>
+                    <div class="credits bottom bright">https://www.flickr.com/photos/10236800@N05/1187219175</div>
+                    <aside class="notes">
+                        Hi, I'm Yoav Weiss, and I won't be talking about Responsive Images for the next 45 minutes. Well, almost.
+                    </aside>
                 </section>
                 <section>
-                    <h2>What are we talking about?</h2>
+                    <h2>What will we be talking about?</h2>
                     <aside class="notes">
-                        <p>I'm Yoav Weiss. I've been working on Web performance stuff for the last 15 years and on 
+                        <p>Preloaders!!!</p>
+                        <p> I've been working on Web performance stuff for the last 15 years and on 
                         responsive images implementation in Blink &amp; WebKit in the last 2 years.</p>
                         <p>As a web performance engineer, the arrival of the preloader really changed the way we had to think about Web
                         performance, and improved the load times of not-so-optimized web sites significantly.</p>
@@ -84,37 +90,48 @@
                         <p>So I'm here to talk a little about what is the preloader, what it does, and why we need it. Badly.</p>
                     </aside>
                 </section>
-                <section>
-                    <h2>Once upon a time</h2>
+                <section data-background="cc_resources/story.jpg">
+                    <h2 class=bright style="width: 600px;margin:auto">Once upon a time</h2>
+                    <div class="credits bottom bright" style="margin-top:
+                        250px;">https://www.flickr.com/photos/soldiersmediacenter/3351707140</div>
                     <aside class="notes">
                         So, once upon a time in a land far far away, browsers were fetching Web
                         pages.
                     </aside>
                 </section>
-                <section>
-                    <h2>HTML</h2>
+                <section data-background="cc_resources/html.jpg">
+                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/tacker/7008650081</div>
                     <aside class="notes">
                         The way they were doing that was that a user would typein a URL, or go
                         to a link. The browser would then fetch the HTML and start parsing it and creating a DOM tree.
                     </aside>
                 </section>
-                <section>
-                    <h2>Subresource</h2>
+                <section data-background="cc_resources/tree.jpg">
+                    <h1 class=bright style="width: 500px;margin:auto;">DOM</h1>
+                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/bearseye/8719343763</div>
                     <aside class="notes">
-                        Once it DOM element the requires to download a subresource was created that needs downloading, the subresource would be added 
+                    </aside>
+                </section>
+                <section data-background="cc_resources/minion.jpg">
+                    <h1 class="bright" style="width: 700px; margin:auto">Subresource</h1>
+                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/enerva/9068467267</div>
+                    <aside class="notes">
+                        Once a DOM element the requires to download a subresource was created that needs downloading, the subresource would be added 
                         to the download queue, and the parser continued parsing out more resources.
                     </aside>
                 </section>
-                <section>
-                    <h2>SUPER subresources!</h2>
+                <section data-background="cc_resources/super_minion.jpg">
+                    <h2 class=bright style="width: 800px; margin: auto">SUPER subresources!</h2>
+                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/cupcakesbydesign/9389284863</div>
                     <aside class="notes">
-                        But, when the parser created a script element,
-                        it would halt and wait for all the resources that
+                        <p>But, not all subresources are created equal.</p>
+                        <p>Some of them have super powers!.</p>
+                        <p>when the parser created a script element, it would halt and wait for all the resources that
                         may impact running of this javascript (including the script itself) to download, get
-                        evaluated and executed, before it would continue the parsing work.
+                        evaluated and executed, before it would continue the parsing work.</p>
                     </aside>
                 </section>
-                <section>
+                <section data-background="cc_resources/slow.jpg">
                     <h2>SLOW!</h2>
                     <aside class="notes">
                         That meant that for pages with multiple external scripts and CSS files
@@ -122,8 +139,9 @@
                         extremely inefficient.
                     </aside>
                 </section>
-                <section>
-                    <h2>Frustration</h2>
+                <section data-background="cc_resources/grumpy.jpg" data-background-position="center -900px">
+                    <h1 class=bright style="margin: auto;margin-top:-300px;width: 700px;">Frustration</h1>
+                    <div class="credits bottom bright" style="margin-top: 450px;">http://chriscoven.deviantart.com/art/Grumpy-cat-344073323</div>
                     <aside class="notes">
                         <p>Users got frustrated by the waiting. </p>
                         <p>Web developers got frustrated by their poor performing sites. </p>
@@ -151,6 +169,12 @@
                     </aside>
                 </section>
                 <section>
+                    <h2>"The greatest browser optimization of all times"</h2>
+                    <p style="text-align: right">- Steve Souders</p>
+                    <aside class="notes">
+                    </aside>
+				</section>
+                <section>
                     <h2>Basic idea</h2>
                     <aside class="notes">
                         <p>The different implementations were different, but the basic idea behind
@@ -158,6 +182,12 @@
                         <p>Peek into the HTML coming in from the network and
                         start an early fetch of the resources that will most probably be requested later on.</p>
                     </aside>
+                </section>
+                <section>
+                    <h2>Peek into HTML</h2>
+                </section>
+                <section>
+                    <h2>Speculatively download resources</h2>
                 </section>
                 <section>
                     <h2>What's with the blocking, man???</h2>
@@ -241,10 +271,91 @@
                         <p>All of them fetch scripts, CSS and images</p>
                         <p>XXXXXXXXXX - add some stuff that aren't prefetched in some browsers</p>
                         <p>XXXXXXXXXX - add some stuff that aren't prefetched anywhere</p>
+                        <p>This can change at any time</p>
                     </aside>
                 </section>
                 <section>
+                    <h2>&lt;link&gt; external CSS</h2>
+                    <div style="height: 200px">
+                        <img src="cc_resources/chrome.png">
+                        <img src="cc_resources/firefox.png">
+                        <img src="cc_resources/ie.png">
+                        <img src="cc_resources/safari.png">
+                        <img src="cc_resources/opera.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>External JS</h2>
+                    <div style="height: 200px">
+                        <img src="cc_resources/chrome.png">
+                        <img src="cc_resources/firefox.png">
+                        <img src="cc_resources/ie.png">
+                        <img src="cc_resources/safari.png">
+                        <img src="cc_resources/opera.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>&lt;img&gt;</h2>
+                    <div style="height: 200px">
+                        <img src="cc_resources/chrome.png">
+                        <img src="cc_resources/firefox.png">
+                        <img src="cc_resources/ie.png">
+                        <img src="cc_resources/safari.png">
+                        <img src="cc_resources/opera.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>@import</h2>
+                    <div style="height: 200px">
+                        <img src="cc_resources/chrome.png">
+                        <img src="cc_resources/safari.png">
+                        <img src="cc_resources/opera.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>&lt;video poster&gt;</h2>
+                    <div style="height: 200px">
+                        <img src="cc_resources/firefox.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>&lt;picture&gt;&lt;img&gt;</h2>
+                    <div style="height: 200px">
+                        <img src="cc_resources/chrome.png">
+                        <img src="cc_resources/firefox.png">
+                        <img src="cc_resources/opera.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>Not preloaded</h2>
+                    <ul>
+                        <li>&lt;input&gt;</li>
+                        <li>&lt;object&gt;</li>
+                        <li>&lt;video&gt;&lt;source&gt;</li>
+                        <li>&lt;audio&gt;&lt;source&gt;</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>CSS/JS based resources</h2>
+                </section>
+                <section>
                     <h2>Priorities</h2>
+                    <aside class="notes">
+                        <p>Once the browser has digged up all the resources, it needs to prioritize them ig it wants to download the most
+                        important ones first</p>
+                        <p>Different browsers do that in different ways</p>
+                        <p>It used to be that each content type had its priority and things would download by that</p>
+                        <p>Nowadays its more complicated than that</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Priorities in Chromium</h2>
+                    <ul>
+                        <li>Render blocking</li>
+                        <li>Scripts</li>
+                        <li>Visible images</li>
+                        <li>Non-visible images</li>
+                    </ul>
                 </section>
                 <section>
                     <h2>Spec???</h2>
@@ -255,7 +366,7 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>Whould should devs know?</h2>
+                    <h2>&lt;advice&gt;</h2>
                 </section>
                 <section>
                     <h2>Preloaders don't see into JS</h2>
@@ -274,24 +385,38 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>Assumption fail</h2>
+                    <h2>Assumption fail #1</h2>
+                    Setting cookies with JS
                     <aside class="notes">
-                        XXXXXXX - The cookie example
+                        <p>If you're setting cookies in JS, you cannot expect them to be present in the same page load on all the
+                        images.</p>
+                        <p>They may be set of some but not for others.</p>
                     </aside>
                 </section>
                 <section>
-                    <h2>assumption #2</h2>
+                    <h2>Assumption fail #2</h2>
+                    Scripts at the bottom
                     <aside class="notes">
-                        XXXXXXXXxx - scripts at the bottom downloaded before images
+                        scripts at the bottom may get downloaded before images
                     </aside>
                 </section>
                 <section>
-                    <h2>Myths debunked</h2>
+                    <h2>Render blocking resources are blocking</h2>
+                    <aside class="notes">
+                        <p>At least in Chromium, to avoid contention, the download happens in two phases.</p>
+                        <p>The first phase downloads one low priority resource and the render blocking resources</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>&lt;/advice&gt;</h2>
+                </section>
+                <section>
+                    <h2>&lt;myths&gt;</h2>
                 </section>
                 <section>
                     <h2>Can't deal with MQs</h2>
                     <aside class="notes">
-                        Used to be true. I fixed that. You welcome
+                        Used to be true. I fixed that. You're welcome
                     </aside>
                 </section>
                 <section>
@@ -301,19 +426,20 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>Prevents dirty hacks</h2>
+                    <h2>Prevents layout based resource loading</h2>
+                    <aside class="notes">
+                        <p>Even without the preloader, browsers shouldn't wait for layout</p>
+                        <p>It introduces wasteful delay</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>&lt;/myths&gt;</h2>
                 </section>
                 <section>
                     <h2>Future improvements</h2>
                     <aside class="notes">
                         <p>Now let's talk about what can be improved in the preloader.</p>
                         <p>So it's more of a "possible future" or "future wherein someone will give me time to work on that"</p>
-                    </aside>
-                </section>
-                <section>
-                    <h2>Direct connection off-main-thread</h2>
-                    <aside class="notes">
-                        That's mostly true for Gecko and Blink.
                     </aside>
                 </section>
                 <section>
@@ -337,10 +463,36 @@
                     <h2>Preloader hints</h2>
                 </section>
                 <section>
-                    <h2>To sum it up</h2>
+                    <h2>defer/async downgrade</h2>
+                </section>
+                <section>
+                    <h2>Preconnecting discovered resources</h2>
+                </section>
+                <section>
+                    <h2>Direct connection off-main-thread</h2>
                     <aside class="notes">
-                    The preloader is your friend. Be kind to it, and he'd be kind to you.
+                        That's mostly true for Gecko and Blink.
                     </aside>
+                </section>
+                <section>
+                    <h2>To sum it up</h2>
+                </section>
+                <section data-Background="cc_resources/bad_wolf.jpg">
+                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/tambako/13498520775</div>
+                    <aside class="notes">
+                        Dealing with the preloader can be at times scary
+                    </aside>
+                </section>
+                <section data-background="cc_resources/dawg.jpg">
+                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/etersigni/6787786882</div>
+                    <aside class="notes">
+                        But when it comes to preformance, the preloader is your best friend. Be kind to it, and he'd be kind to you.
+                    </aside>
+                </section>
+                <section>
+                    <h1>Thanks!</h1>
+                    <p> <a href="https://twitter.com/yoavweiss">@yoavweiss</a> on Twitter &amp; GitHub</p>
+                    <p>Slides: <a href="http://yoavweiss.github.io/preloader-velocity-nyc-talk/">yoavweiss.github.io/preloader-velocity-nyc-talk</a></p>
                 </section>
                 <!--
 				<section>
@@ -672,7 +824,7 @@ function linkify( selector ) {
 				center: true,
 
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+				transition: 'none', //Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
 
 				// Parallax scrolling
 				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
