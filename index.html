@@ -37,7 +37,7 @@
             .reveal .bottom { margin-top: 250px;}
             .reveal h1.bright, .reveal h2.bright { padding-bottom: 20px; }
             code span.highlight {font-weight: bold; font-size: 1.4em;}
-            .reveal code {font-size: 1.2em; width: 120%;margin-left: -10%;line-height: 1.3em;}
+            .reveal code {font-size: 2.0em; margin: auto;line-height: 1.3em;}
             h1.large { font-size: 8em; }
 
             // Thanks to http://stackoverflow.com/questions/2539207/how-to-change-the-strike-out-line-through-thickness-in-css
@@ -53,6 +53,7 @@
                 top: 60%;
             }
             .reveal section img {border: none;}
+            .reveal section .box { border: solid black 3px; background: lightblue; }
         </style>
 
 		<!--[if lt IE 9]>
@@ -66,9 +67,9 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides" >
-                <section data-background="cc_resources/big_bad_wolf.jpg">
-                    <h1 class=bright>Who's afraid of the big bad preloader?</h1>
-                    <div class="credits bottom bright">https://www.flickr.com/photos/10236800@N05/1187219175</div>
+                <section>
+                    <h1>Who's afraid of the big bad preloader?</h1>
+                    <div style="margin-top: 100px"> <a href="https://twitter.com/yoavweiss">Yoav Weiss</a></div>
                     <aside class="notes">
                         Hi, I'm Yoav Weiss, and I won't be talking about Responsive Images for the next 45 minutes. Well, almost.
                     </aside>
@@ -93,14 +94,14 @@
                 <section data-background="cc_resources/story.jpg">
                     <h2 class=bright style="width: 600px;margin:auto">Once upon a time</h2>
                     <div class="credits bottom bright" style="margin-top:
-                        250px;">https://www.flickr.com/photos/soldiersmediacenter/3351707140</div>
+                        250px;"><a href="https://www.flickr.com/photos/soldiersmediacenter/3351707140">https://www.flickr.com/photos/soldiersmediacenter/3351707140</a>
                     <aside class="notes">
                         So, once upon a time in a land far far away, browsers were fetching Web
                         pages.
                     </aside>
                 </section>
                 <section data-background="cc_resources/html.jpg">
-                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/tacker/7008650081</div>
+                    <div class="credits bottom bright" style="margin-top: 450px;"><a href="https://www.flickr.com/photos/tacker/7008650081">https://www.flickr.com/photos/tacker/7008650081</a>
                     <aside class="notes">
                         The way they were doing that was that a user would typein a URL, or go
                         to a link. The browser would then fetch the HTML and start parsing it and creating a DOM tree.
@@ -108,21 +109,22 @@
                 </section>
                 <section data-background="cc_resources/tree.jpg">
                     <h1 class=bright style="width: 500px;margin:auto;">DOM</h1>
-                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/bearseye/8719343763</div>
+                    <div class="credits bottom bright" style="margin-top: 450px;"><a href="https://www.flickr.com/photos/bearseye/8719343763">https://www.flickr.com/photos/bearseye/8719343763</a>
                     <aside class="notes">
                     </aside>
                 </section>
-                <section data-background="cc_resources/minion.jpg">
-                    <h1 class="bright" style="width: 700px; margin:auto">Subresource</h1>
-                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/enerva/9068467267</div>
+                <section data-background="cc_resources/puppies.jpg">
+                    <h1 class="bright" style="width: 750px; margin:auto">Subresources</h1>
+                    <div class="credits bottom bright" style="margin-top: 450px;"><a href="https://www.flickr.com/photos/crazymandi/8165507495">https://www.flickr.com/photos/crazymandi/8165507495</a>
                     <aside class="notes">
                         Once a DOM element the requires to download a subresource was created that needs downloading, the subresource would be added 
                         to the download queue, and the parser continued parsing out more resources.
                     </aside>
                 </section>
-                <section data-background="cc_resources/super_minion.jpg">
+                <section data-background="cc_resources/super_dawg.jpg">
                     <h2 class=bright style="width: 800px; margin: auto">SUPER subresources!</h2>
-                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/cupcakesbydesign/9389284863</div>
+                    <div class="credits bottom bright" style="margin-top: 450px;">
+                        <a href="http://commons.wikimedia.org/wiki/File:Long_Beach_Comic_%26_Horror_Con_2011_-_Krypto,_the_Super_Dog_(6301707368).jpg">http://commons.wikimedia.org/wiki/File:Long_Beach_Comic_%26_Horror_Con_2011_-_Krypto,_the_Super_Dog_(6301707368).jpg</a>
                     <aside class="notes">
                         <p>But, not all subresources are created equal.</p>
                         <p>Some of them have super powers!.</p>
@@ -139,16 +141,16 @@
                         extremely inefficient.
                     </aside>
                 </section>
-                <section data-background="cc_resources/grumpy.jpg" data-background-position="center -900px">
-                    <h1 class=bright style="margin: auto;margin-top:-300px;width: 700px;">Frustration</h1>
-                    <div class="credits bottom bright" style="margin-top: 450px;">http://chriscoven.deviantart.com/art/Grumpy-cat-344073323</div>
+                <section data-background="cc_resources/grumpy.jpg" data-background-position="center -500px">
+                    <h1 class=bright style="margin: auto;margin-top:0px;width: 700px;">Frustration</h1>
+                    <div class="credits bottom bright" style="margin-top: 450px;"><a href="http://chriscoven.deviantart.com/art/Grumpy-cat-344073323">http://chriscoven.deviantart.com/art/Grumpy-cat-344073323</a>
                     <aside class="notes">
                         <p>Users got frustrated by the waiting. </p>
                         <p>Web developers got frustrated by their poor performing sites. </p>
                     </aside>
                 </section>
-                <section>
-                    <h2>Workarounds</h2>
+                <section  data-background="cc_resources/highperf.jpg">
+                    <h1 class=bright>Workarounds</h1>
                     <aside class="notes">
                         <p>Books were written with workaround techniques &amp; best practices:</p>
                         <p>Minimizing the number of CSS and JS requests, putting scripts at the bottom, etc</p>
@@ -175,19 +177,23 @@
                     </aside>
 				</section>
                 <section>
-                    <h2>Basic idea</h2>
+                    <h2>What does it do?</h2>
                     <aside class="notes">
                         <p>The different implementations were different, but the basic idea behind
                         them was the same. </p>
-                        <p>Peek into the HTML coming in from the network and
-                        start an early fetch of the resources that will most probably be requested later on.</p>
                     </aside>
                 </section>
                 <section>
                     <h2>Peek into HTML</h2>
+                    <aside class="notes">
+                        <p>Peek into the HTML coming in from the network and</p>
+                    </aside>
                 </section>
                 <section>
                     <h2>Speculatively download resources</h2>
+                    <aside class="notes">
+                        <p>start an early fetch of the resources that will most probably be requested later on.</p>
+                    </aside>
                 </section>
                 <section>
                     <h2>What's with the blocking, man???</h2>
@@ -216,7 +222,10 @@
                 </section>
                 <section>
                     <h2>Style queries</h2>
-                    <pre><code>&lt;script&gt;var width = document.getElementById("thing").width();&lt;/script&gt</code></pre>
+                    <pre><code>&lt;script&gt;
+var width = 
+    document.getElementById("thing").width();
+&lt;/script&gt</code></pre>
                     <aside class="notes">
                         <p>Javascripts (both internal and external) can look into style
                         information on the current DOM. </p>
@@ -237,6 +246,15 @@
                 </section>
                 <section>
                     <h2>Tokenization</h2>
+                    <br>
+                    <span class=box>"&lt;img src&gt;&lt;div&gt;some text&lt;/div&gt;&lt;/img&gt;"</span>
+                    <br><br> &darr;<br><br>
+                    <span class=box>StartTag: img, src attribute</span>, 
+                    <span class=box>StartTag: div</span>, 
+                    <span class=box>Text: "some text"</span>, 
+                    <br><br>
+                    <span class=box>EndTag: div</span>,
+                    <span class=box>EndTag: img</span>
                     <aside class="notes">
                         <p>Before parsing can start, the browser turns the incoming bytes into characters, and turns these characters into
                         tokens in a process that's called tokenization.</p>
@@ -247,6 +265,12 @@
                 </section>
                 <section>
                     <h2>Parsing</h2>
+                    <br><br>
+                    <span class="box">HTMLBodyElement</span>
+                    <br><br>
+                    <span class=box>HTMLImageElement</span>&nbsp;<span class=box>HTMLDivElement</span>
+                    <br><br>
+                    <span class=box style="margin-left: 300px;">Text</span>
                     <aside class="notes">
                         <p>The parser then takes these tokens and creates a DOM tree from them, while applying the specced HTML parsing
                         rules.</p>
@@ -366,6 +390,11 @@
                     </aside>
                 </section>
                 <section>
+                    <h2>Benefits</h2>
+                    <p>About 20% improvement</p>
+                    <div class="credits bottom">Source: <a href="https://plus.google.com/+IlyaGrigorik/posts/8AwRUE7wqAE">https://plus.google.com/+IlyaGrigorik/posts/8AwRUE7wqAE</a>
+                </section>
+                <section>
                     <h2>&lt;advice&gt;</h2>
                 </section>
                 <section>
@@ -478,13 +507,13 @@
                     <h2>To sum it up</h2>
                 </section>
                 <section data-Background="cc_resources/bad_wolf.jpg">
-                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/tambako/13498520775</div>
+                    <div class="credits bottom bright" style="margin-top: 450px;"><a href="https://www.flickr.com/photos/tambako/13498520775">https://www.flickr.com/photos/tambako/13498520775</a>
                     <aside class="notes">
                         Dealing with the preloader can be at times scary
                     </aside>
                 </section>
                 <section data-background="cc_resources/dawg.jpg">
-                    <div class="credits bottom bright" style="margin-top: 450px;">https://www.flickr.com/photos/etersigni/6787786882</div>
+                    <div class="credits bottom bright" style="margin-top: 450px;"><a href="https://www.flickr.com/photos/etersigni/6787786882">https://www.flickr.com/photos/etersigni/6787786882</a>
                     <aside class="notes">
                         But when it comes to preformance, the preloader is your best friend. Be kind to it, and he'd be kind to you.
                     </aside>
