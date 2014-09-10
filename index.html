@@ -381,8 +381,10 @@ var width =
                         <li>Non-visible images</li>
                     </ul>
                 </section>
-                <section>
-                    <h2>Spec???</h2>
+                <section data-background="cc_resources/future.jpg">
+                    <h2 class=bright style="width: 400px; margin:auto;">Spec???</h2>
+                    <h2 class="bright bottom" style="margin-top: 400px">Where we're going, we don't need specs<h2>
+                    <div class="credits bottom bright" style="margin-top: 50px">https://www.flickr.com/photos/wwarby/9641216546</div>
                     <aside class="notes">
                         <p>There is no preloader spec since it's an optimization that does not have any compatibility implications</p>
                         <p>The fact that it isn't specced allows browsers to rapidly innovate in that area, and come up with faster priority
@@ -401,10 +403,13 @@ var width =
                     <h2>Preloaders don't see into JS</h2>
                 </section>
                 <section>
-                    <h2>Make sure that all resources that should be preloaded are visible</h2>
-                </section>
-                <section>
-                    <h2>Make sure that resources you don't want preloaded, aren't visible</h2>
+                    <h2>Preloaded resources <=> in markup</h2>
+                    <aside class="notes">
+                        <p>Preloaders don't see into JS, and currently, not even into CSS</p>
+                        <p>Resources that you want the preloader to pick up and download, should be in markup</p>
+                        <p>If OTOH, you have resources that are not necessary to the initial page load, they must not be in markup</p>
+                        <p>e.g. lazy loading, resp img solution, etc </p>
+                    </aside>
                 </section>
                 <section>
                     <h2>Assume nothing</h2>
