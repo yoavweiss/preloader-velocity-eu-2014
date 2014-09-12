@@ -80,14 +80,14 @@
                         <p>Preloaders!!!</p>
                         <p> I've been working on Web performance stuff for the last 15 years and on 
                         responsive images implementation in Blink &amp; WebKit in the last 2 years.</p>
-                        <p>As a web performance engineer, the arrival of the preloader really changed the way we had to think about Web
-                        performance, and improved the load times of not-so-optimized web sites significantly.</p>
-                        <p>Yet when I was talking about responsive images in last year's velocity, and asked the audience "who knows what is
+                        <p>The reason that I'm talking about it is that when I was talking about responsive images in last year's velocity, and asked the audience "who knows what is
                         the browser's preloader", only Steve raised his hand. That made me think that we're not talking about this
                         enough.</p>
                         <p>Also as part of my responsive images work, I had to fiddle quite a lot with the preloader on the one hand, and
                         manage mailing list flames on the other, from developers who thought that it's a "mindless optimization" that's
                         "holding us back".</p>
+                        <p>As a web performance engineer, the arrival of the preloader really changed the way we had to think about Web
+                        performance, and improved the load times of not-so-optimized web sites significantly.</p>
                         <p>So I'm here to talk a little about what is the preloader, what it does, and why we need it. Badly.</p>
                     </aside>
                 </section>
@@ -134,7 +134,7 @@
                     </aside>
                 </section>
                 <section data-background="cc_resources/slow.jpg">
-                    <h2>SLOW!</h2>
+                    <h1 class=bright style="with: 400px; margin: auto;">SLOW!</h1>
                     <aside class="notes">
                         That meant that for pages with multiple external scripts and CSS files
                         (which is the lot of them), the resource downloading process was
@@ -179,7 +179,7 @@
                 <section>
                     <h2>What does it do?</h2>
                     <aside class="notes">
-                        <p>The different implementations were different, but the basic idea behind
+                        <p>Even though implementations were different, the basic idea behind
                         them was the same. </p>
                     </aside>
                 </section>
@@ -357,6 +357,8 @@ var width =
                         <li>&lt;object&gt;</li>
                         <li>&lt;video&gt;&lt;source&gt;</li>
                         <li>&lt;audio&gt;&lt;source&gt;</li>
+                        <li>&lt;iframe&gt;</li>
+                        <li>&lt;link rel=import&gt;</li>
                     </ul>
                 </section>
                 <section>
@@ -373,28 +375,46 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Priorities in Chromium</h2>
+                    <h2>Based on context</h2>
                     <ul>
-                        <li>Render blocking</li>
+                        <li>CSS</li>
                         <li>Scripts</li>
                         <li>Visible images</li>
                         <li>Non-visible images</li>
                     </ul>
+                </section>
+                <section>
+                    <h2>&lt;head&gt; first</h2>
+                    <aside class="notes">
+                        Render blocking resources in the head are being downloaded first, at least in Chromium.
+                    </aside>
                 </section>
                 <section data-background="cc_resources/future.jpg">
                     <h2 class=bright style="width: 400px; margin:auto;">Spec???</h2>
                     <h2 class="bright bottom" style="margin-top: 400px">Where we're going, we don't need specs<h2>
                     <div class="credits bottom bright" style="margin-top: 50px">https://www.flickr.com/photos/wwarby/9641216546</div>
                     <aside class="notes">
+                        <p>Now you may ask yourselves "where's the spec to all of this wonder?"</p>
                         <p>There is no preloader spec since it's an optimization that does not have any compatibility implications</p>
                         <p>The fact that it isn't specced allows browsers to rapidly innovate in that area, and come up with faster priority
                         schemes, etc</p>
                     </aside>
                 </section>
                 <section>
-                    <h2>Benefits</h2>
-                    <p>About 20% improvement</p>
+                    <h2>What has the preloader ever done for us?</h2>
+                </section>
+                <section data-background="cc_resources/bostonglobe_no_preloader_waterfall.png" data-background-size=95%>
+                    <h1 class=bright style="width: 400px;margin: auto;">Before</h1>
+                </section>
+                <section data-background="cc_resources/bostonglobe_preloader_waterfall.png" data-background-size=95%>
+                    <h1 class=bright style="width: 400px;margin: auto;">After</h1>
+                </section>
+                <section>
+                    <h2>20% on average</h2>
                     <div class="credits bottom">Source: <a href="https://plus.google.com/+IlyaGrigorik/posts/8AwRUE7wqAE">https://plus.google.com/+IlyaGrigorik/posts/8AwRUE7wqAE</a>
+                    <aside class="notes">
+                        20% improvements across the board: load time, domContentLoaded and speedIndex
+                    </aside>
                 </section>
                 <section>
                     <h2>&lt;advice&gt;</h2>
@@ -412,7 +432,7 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Assume nothing</h2>
+                    <h2>Assume nothing about loading order</h2>
                     <aside class="notes">
                         <p>The network download order of resource can and will change between browsers and browser versions.</p>
                         <p>Make your peace with it</p>
@@ -435,7 +455,32 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Render blocking resources are blocking</h2>
+                    <h2>Use APIs that expose resources</h2>
+                    <aside class="notes">
+			
+                    </aside>
+                </section>
+                <section>
+                    <h2>FontLoad API</h2>
+                    <pre><code>
+var f = new FontFace("newfont", 
+                     "url(newfont.woff)", {});
+f.load().then(function (fontFact) {
+    // Do something once font is loaded.
+});
+                    </code></pre>
+                    <aside class="notes">
+                    </aside>
+                </section>
+                <section>
+                    <h2>Resource hints</h2>
+                    <pre><code>
+&lt;link rel="preload" href="/assets/font.woff" 
+      as="font"&gt;
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Render blocking resources are bad, mmmmmkay?</h2>
                     <aside class="notes">
                         <p>At least in Chromium, to avoid contention, the download happens in two phases.</p>
                         <p>The first phase downloads one low priority resource and the render blocking resources</p>
@@ -445,36 +490,16 @@ var width =
                     <h2>&lt;/advice&gt;</h2>
                 </section>
                 <section>
-                    <h2>&lt;myths&gt;</h2>
-                </section>
-                <section>
-                    <h2>Can't deal with MQs</h2>
-                    <aside class="notes">
-                        Used to be true. I fixed that. You're welcome
-                    </aside>
-                </section>
-                <section>
-                    <h2>Limits ability to modify resource URLs</h2>
-                    <aside class="notes">
-                        That was never possible, regardless of preloader.
-                    </aside>
-                </section>
-                <section>
-                    <h2>Prevents layout based resource loading</h2>
-                    <aside class="notes">
-                        <p>Even without the preloader, browsers shouldn't wait for layout</p>
-                        <p>It introduces wasteful delay</p>
-                    </aside>
-                </section>
-                <section>
-                    <h2>&lt;/myths&gt;</h2>
-                </section>
-                <section>
-                    <h2>Future improvements</h2>
+                    <h2>&lt;future???&gt; </h2>
                     <aside class="notes">
                         <p>Now let's talk about what can be improved in the preloader.</p>
                         <p>So it's more of a "possible future" or "future wherein someone will give me time to work on that"</p>
                     </aside>
+                </section>
+                <section>
+                    <h2>More resources</h2>
+                        <li>&lt;iframe&gt;</li>
+                        <li>&lt;link rel=import&gt;</li>
                 </section>
                 <section>
                     <h2>Better CSS support</h2>
@@ -486,30 +511,34 @@ var width =
                 </section>
                 <section>
                     <h2>Fonts</h2>
-                </section>
-                <section>
-                    <h2>Background images</h2>
-                </section>
-                <section>
-                    <h2>Resource priorities</h2>
-                </section>
-                <section>
-                    <h2>Preloader hints</h2>
-                </section>
-                <section>
-                    <h2>defer/async downgrade</h2>
-                </section>
-                <section>
-                    <h2>Preconnecting discovered resources</h2>
-                </section>
-                <section>
-                    <h2>Direct connection off-main-thread</h2>
                     <aside class="notes">
-                        That's mostly true for Gecko and Blink.
+                        Being able to start download of Web fonts earlier can be a huge win for speed index and UX.
                     </aside>
                 </section>
                 <section>
+                    <h2>Background images</h2>
+                    <aside class="notes">
+                        Background images can also be helpful if we could start them earlier, but to a lesser extent.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Resource priorities</h2>
+                    <aside class="notes">
+                        <p>There are currently 2 proposals for specs that manage the priorities of resources declared in markup</p>
+                        <p>If either would get adoption, it'd enable the preloader to be smarter, and would enable devs to opt-out of the
+                        preloader</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>&lt;/future&gt;</h2>
+                </section>
+                <section>
                     <h2>To sum it up</h2>
+                    <aside class="notes">
+                        <p>The preloader is an extremely important browser optimizations</p>
+                        <p>Developers should be aware of it, and work with it, rather than against it</p>
+                        <p>I believe that there's still some more optimization juice that can be squized out of it</p>
+                    </aside>
                 </section>
                 <section data-Background="cc_resources/bad_wolf.jpg">
                     <div class="credits bottom bright" style="margin-top: 450px;"><a href="https://www.flickr.com/photos/tambako/13498520775">https://www.flickr.com/photos/tambako/13498520775</a>
