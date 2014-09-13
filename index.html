@@ -477,6 +477,7 @@ f.load().then(function (fontFact) {
                     <pre><code>
 &lt;link rel="preload" href="/assets/font.woff" 
       as="font"&gt;
+&lt;link rel="preconnect" href="http://thirdparty.com"&gt;
                     </code></pre>
                 </section>
                 <section>
@@ -531,6 +532,32 @@ f.load().then(function (fontFact) {
                 </section>
                 <section>
                     <h2>&lt;/future&gt;</h2>
+                </section>
+                <section>
+                    <h2>Speaking of the future</h2>
+                </section>
+                <section>
+                    <h2>HTTP2?</h2>
+                </section>
+                <section>
+                    <h2>No load queue</h2>
+                </section>
+                <section>
+                    <h2>Priorities sent to the server</h2>
+                    <aside class="notes">
+                        <p>You could claim that detecting resources (and their priorities) as fast as possible becomes even more important</p>
+                        <p>No contention avoidance</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Server push tho</h2>
+                    <aside class="notes">
+                        For first party resources, you could also claim that server push makes all that obsolete
+                        <!-- Can we get HTTP2 to send a bloom filter of a hash of cached resources,so that server push won't suck??? -->
+                    </aside>
+                </section>
+                <section>
+                    <h2>Time will tell</h2>
                 </section>
                 <section>
                     <h2>To sum it up</h2>
