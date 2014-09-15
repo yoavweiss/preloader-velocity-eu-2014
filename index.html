@@ -176,8 +176,12 @@
                     <aside class="notes">
                     </aside>
 				</section>
+                <section data-background="cc_resources/everafter.jpg">
+                    <div class="credits bottom bright" style="margin-top: 450px;"><a
+                            href="https://www.flickr.com/photos/stampinmom/5373581438">https://www.flickr.com/photos/stampinmom/5373581438</a>
+                </section>
                 <section>
-                    <h2>What does it do?</h2>
+                    <h1>What does it do?</h1>
                     <aside class="notes">
                         <p>Even though implementations were different, the basic idea behind
                         them was the same. </p>
@@ -196,47 +200,7 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>What's with the blocking, man???</h2>
-                    <aside class="notes">
-                        So why is the parser blocked on scripts anyway?
-                    </aside>
-                </section>
-                <section>
-                    <h2>DOM state</h2>
-                    <aside class="notes">
-                        <p>Synchronous scripts may expect the DOM to be in a certain state</p>
-                        <p>JavaScript can alter the HTML, which means that the parser can
-                          reliably continue parsing, adding stuff to the DOM and only then run
-                          the javascript.</p>
-                          <p> That may cause the javascript to break (since it
-                          rightfully expecting the DOM to be in a certain state when it runs).</p>
-                    </aside>
-                </section>
-                <section>
-                    <h2>document.write</h2>
-                    <pre><code>&lt;script&gt;document.write("&lt;!--");&lt;/script&gt
-&lt;div&gt;...</code></pre>
-                    <aside class="notes">
-                        scripts can alter the HTML, which means creating the "future" DOM may become irrelevant
-                    </aside>
-                </section>
-                <section>
-                    <h2>Style queries</h2>
-                    <pre><code>&lt;script&gt;
-var width = 
-    document.getElementById("thing").width();
-&lt;/script&gt</code></pre>
-                    <aside class="notes">
-                        <p>Javascripts (both internal and external) can look into style
-                        information on the current DOM. </p>
-                        <p>That means that if the external CSS wasn't fully downloaded, the browser have to wait for it to arrive, and
-                        apply it, before running scripts that are later on in the page.</p>
-                        <p>Some browsers optimized that to do that only when scripts actually
-                        include such directives, while others didn't bother with it (citation needed).</p>
-                    </aside>
-                </section>
-                <section>
-                    <h2>How does it work?</h2>
+                    <h1>How does it work?</h1>
                     <aside class="notes">
                         <p>Despite rumors, the preloader is not some weird regex engine, it doesn't look into the raw bytes, etc, etc.</p>
                         <p>In order to explain the preloader, a quick detour into how HTML parsing
@@ -293,7 +257,49 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Which resources?</h2>
+                    <h1>Why are we blocking???</h1>
+                    <aside class="notes">
+                        So why is the parser blocked on scripts anyway?
+                    </aside>
+                </section>
+                <section>
+                    <h2>DOM state</h2>
+                    <pre><code>var p = document.createElement("p");
+document.body.appendChild(p); </code></pre>
+                    <aside class="notes">
+                        <p>Synchronous scripts may expect the DOM to be in a certain state</p>
+                        <p>JavaScript can alter the HTML, which means that the parser can
+                          reliably continue parsing, adding stuff to the DOM and only then run
+                          the javascript.</p>
+                          <p> That may cause the javascript to break (since it
+                          rightfully expecting the DOM to be in a certain state when it runs).</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>document.write</h2>
+                    <pre><code>&lt;script&gt;document.write("&lt;!--");&lt;/script&gt;
+&lt;div&gt;...</code></pre>
+                    <aside class="notes">
+                        scripts can alter the HTML, which means creating the "future" DOM may become irrelevant
+                    </aside>
+                </section>
+                <section>
+                    <h2>Style queries</h2>
+                    <pre><code>&lt;script&gt;
+var width = 
+    document.getElementById("thing").width();
+&lt;/script&gt;</code></pre>
+                    <aside class="notes">
+                        <p>Javascripts (both internal and external) can look into style
+                        information on the current DOM. </p>
+                        <p>That means that if the external CSS wasn't fully downloaded, the browser have to wait for it to arrive, and
+                        apply it, before running scripts that are later on in the page.</p>
+                        <p>Some browsers optimized that to do that only when scripts actually
+                        include such directives, while others didn't bother with it (citation needed).</p>
+                    </aside>
+                </section>
+                <section>
+                    <h1>Which resources?</h1>
                     <aside class="notes">
                         <p>All of them fetch scripts, CSS and images</p>
                         <p>XXXXXXXXXX - add some stuff that aren't prefetched in some browsers</p>
@@ -349,7 +355,7 @@ var width =
                     <h2>&lt;picture&gt;&lt;img&gt;</h2>
                     <div style="height: 200px">
                         <img src="cc_resources/chrome.png">
-                        <img src="cc_resources/firefox.png">
+                        <img src="cc_resources/firefox.png" style="opacity: 0.4;">
                         <img src="cc_resources/opera.png">
                     </div>
                 </section>
@@ -365,12 +371,15 @@ var width =
                     </ul>
                 </section>
                 <section>
-                    <h2>CSS/JS based resources</h2>
+                    <h2>CSS based resources</h2>
                 </section>
                 <section>
-                    <h2>Priorities</h2>
+                    <h2>JS based resources</h2>
+                </section>
+                <section>
+                    <h1>Priorities</h1>
                     <aside class="notes">
-                        <p>Once the browser has digged up all the resources, it needs to prioritize them ig it wants to download the most
+                        <p>Once the browser has digged up all the resources, it needs to prioritize them if it wants to download the most
                         important ones first</p>
                         <p>Different browsers do that in different ways</p>
                         <p>It used to be that each content type had its priority and things would download by that</p>
@@ -392,10 +401,8 @@ var width =
                         Render blocking resources in the head are being downloaded first, at least in Chromium.
                     </aside>
                 </section>
-                <section data-background="cc_resources/future.jpg">
-                    <h2 class=bright style="width: 400px; margin:auto;">Spec???</h2>
-                    <h2 class="bright bottom" style="margin-top: 400px">Where we're going, we don't need specs<h2>
-                    <div class="credits bottom bright" style="margin-top: 50px">https://www.flickr.com/photos/wwarby/9641216546</div>
+                <section>
+                    <h1 style="width: 600px; margin:auto;">Spec???</h1>
                     <aside class="notes">
                         <p>Now you may ask yourselves "where's the spec to all of this wonder?"</p>
                         <p>There is no preloader spec since it's an optimization that does not have any compatibility implications</p>
@@ -404,7 +411,7 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>What has the preloader ever done for us?</h2>
+                    <h1>What has the preloader ever done for us?</h1>
                 </section>
                 <section data-background="cc_resources/bostonglobe_no_preloader_waterfall.png" data-background-size=95%>
                     <h1 class=bright style="width: 400px;margin: auto;">Before</h1>
@@ -423,24 +430,28 @@ var width =
                     <h2>&lt;advice&gt;</h2>
                 </section>
                 <section>
-                    <h2>Preloaders don't see into JS</h2>
-                </section>
-                <section>
-                    <h2>Preloaded resources <=> in markup</h2>
+                    <h2>Critical resources must be in markup</h2>
                     <aside class="notes">
                         <p>Preloaders don't see into JS, and currently, not even into CSS</p>
                         <p>Resources that you want the preloader to pick up and download, should be in markup</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Non-critical resources... Maybe not</h2>
+                    <aside class="notes">
                         <p>If OTOH, you have resources that are not necessary to the initial page load, they must not be in markup</p>
                         <p>e.g. lazy loading, resp img solution, etc </p>
                     </aside>
                 </section>
                 <section>
                     <h2>Don't invalidate the DOM</h2>
+                    <pre><code>document.getElementByTagName("base").href=
+    "http://DontDoThat.com"</code></pre>
                 </section>
                 <section>
                     <h2>Assume nothing about loading order</h2>
                     <aside class="notes">
-                        <p>The network download order of resource can and will change between browsers and browser versions.</p>
+                        <p>The network download order of a resource can and will change between browsers and browser versions.</p>
                         <p>Make your peace with it</p>
                     </aside>
                 </section>
@@ -461,7 +472,7 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Use APIs that expose resources</h2>
+                    <h2>Use APIs that expose critical hidden resources</h2>
                     <aside class="notes">
 			
                     </aside>
