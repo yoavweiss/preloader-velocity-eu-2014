@@ -376,9 +376,11 @@ var width =
                 <section>
                     <h2>JS based resources</h2>
                 </section>
-                <section>
-                    <h1>Priorities</h1>
-                    <aside class="notes">
+                <section data-background="cc_resources/priority.jpg">
+                    <h1 class="dark" style="width: 500px; margin: auto; padding-bottom: 10px;">Priorities</h1>
+                    <div class="credits bottom bright" style="margin-top: 450px;"><a
+                            href="https://www.flickr.com/photos/markmorgantrinidad/5129282497">https://www.flickr.com/photos/markmorgantrinidad/5129282497</a>
+                        <aside class="notes">
                         <p>Once the browser has digged up all the resources, it needs to prioritize them if it wants to download the most
                         important ones first</p>
                         <p>Different browsers do that in different ways</p>
@@ -434,6 +436,7 @@ var width =
                     <aside class="notes">
                         <p>Preloaders don't see into JS, and currently, not even into CSS</p>
                         <p>Resources that you want the preloader to pick up and download, should be in markup</p>
+                        Async scripts when possible
                     </aside>
                 </section>
                 <section>
@@ -441,12 +444,21 @@ var width =
                     <aside class="notes">
                         <p>If OTOH, you have resources that are not necessary to the initial page load, they must not be in markup</p>
                         <p>e.g. lazy loading, resp img solution, etc </p>
+                        <p>This is not ideal browser behaviour :/</p>
                     </aside>
                 </section>
                 <section>
                     <h2>Don't invalidate the DOM</h2>
                     <pre><code>document.getElementByTagName("base").href=
     "http://DontDoThat.com"</code></pre>
+                </section>
+                <section>
+                    <h2>Set charset in HTTP headers</h2>
+                    <aside class="notes">
+                        If the document charset is defined at a late stage, it can invalidate HTTP requests that already went out (IE only
+                        ???)
+
+                    </aside>
                 </section>
                 <section>
                     <h2>Assume nothing about loading order</h2>
@@ -599,6 +611,9 @@ f.load().then(function (fontFact) {
                     <h1>Thanks!</h1>
                     <p> <a href="https://twitter.com/yoavweiss">@yoavweiss</a> on Twitter &amp; GitHub</p>
                     <p>Slides: <a href="http://yoavweiss.github.io/preloader-velocity-eu-2014/">yoavweiss.github.io/preloader-velocity-eu-2014</a></p>
+                    <aside class="notes">
+                        Please rate the talk and if you didn't like it, tell me why
+                    </aside>
                 </section>
                 <!--
 				<section>
