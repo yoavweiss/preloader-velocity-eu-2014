@@ -190,13 +190,13 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>Peek into HTML</h2>
+                    <h1>Peek into HTML</h1>
                     <aside class="notes">
                         <p>Peek into the HTML coming in from the network and</p>
                     </aside>
                 </section>
                 <section>
-                    <h2>Speculatively download resources</h2>
+                    <h1>Speculatively download resources</h1>
                     <aside class="notes">
                         <p>start an early fetch of the resources that will most probably be requested later on.</p>
                     </aside>
@@ -211,10 +211,10 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>Preprocessing</h2>
+                    <h1>Preprocessing</h1>
                 </section>
                 <section>
-                    <h2>Tokenization</h2>
+                    <h1>Tokenization</h1>
                     <br>
                     <span class=box>"&lt;img src&gt;&lt;div&gt;some text&lt;/div&gt;&lt;/img&gt;"</span>
                     <br><br> &darr;<br><br>
@@ -233,7 +233,7 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>Parsing</h2>
+                    <h1>Parsing</h1>
                     <br><br>
                     <span class="box">HTMLBodyElement</span>
                     <br><br>
@@ -248,7 +248,7 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>Where does the preloader fit in?</h2>
+                    <h1>Where does the preloader fit in?</h1>
                     <aside class="notes">
                         <p>The preloader steps in between the tokenization phase and the parsing phase.</p>
                         <p>It feeds off serialized tokens (so basically complete HTML tags), and concludes from them which resources are
@@ -265,7 +265,7 @@
                     </aside>
                 </section>
                 <section>
-                    <h2>DOM state</h2>
+                    <h1>DOM state</h1>
                     <pre><code>var p = document.createElement("p");
 document.body.appendChild(p); </code></pre>
                     <aside class="notes">
@@ -278,15 +278,16 @@ document.body.appendChild(p); </code></pre>
                     </aside>
                 </section>
                 <section>
-                    <h2>document.write</h2>
-                    <pre><code>&lt;script&gt;document.write("This goes right before bla");&lt;/script&gt;
+                    <h1>document.write</h1>
+                    <pre><code>&lt;script&gt;document.write("right before bla");
+&lt;/script&gt;
 &lt;div id=bla&gt;...</code></pre>
                     <aside class="notes">
                         scripts can alter the HTML, which means creating the "future" DOM may become irrelevant
                     </aside>
                 </section>
                 <section>
-                    <h2>Style queries</h2>
+                    <h1>Style queries</h1>
                     <pre><code>&lt;script&gt;
 var width = 
     document.getElementById("thing").width();
@@ -310,7 +311,7 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>&lt;link&gt; external CSS</h2>
+                    <h1>&lt;link&gt; external CSS</h1>
                     <div style="height: 200px">
                         <img src="cc_resources/chrome.png">
                         <img src="cc_resources/firefox.png">
@@ -320,7 +321,7 @@ var width =
                     </div>
                 </section>
                 <section>
-                    <h2>External JS</h2>
+                    <h1>External JS</h1>
                     <div style="height: 200px">
                         <img src="cc_resources/chrome.png">
                         <img src="cc_resources/firefox.png">
@@ -330,7 +331,7 @@ var width =
                     </div>
                 </section>
                 <section>
-                    <h2>&lt;img&gt;</h2>
+                    <h1>&lt;img&gt;</h1>
                     <div style="height: 200px">
                         <img src="cc_resources/chrome.png">
                         <img src="cc_resources/firefox.png">
@@ -340,7 +341,7 @@ var width =
                     </div>
                 </section>
                 <section>
-                    <h2>@import</h2>
+                    <h1>@import</h1>
                     <div style="height: 200px">
                         <img src="cc_resources/chrome.png">
                         <img src="cc_resources/safari.png">
@@ -348,13 +349,13 @@ var width =
                     </div>
                 </section>
                 <section>
-                    <h2>&lt;video poster&gt;</h2>
+                    <h1>&lt;video poster&gt;</h1>
                     <div style="height: 200px">
                         <img src="cc_resources/firefox.png">
                     </div>
                 </section>
                 <section>
-                    <h2>&lt;picture&gt;&lt;img&gt;</h2>
+                    <h1>&lt;picture&gt;&lt;img&gt;</h1>
                     <div style="height: 200px">
                         <img src="cc_resources/chrome.png">
                         <img src="cc_resources/firefox.png" style="opacity: 0.4;">
@@ -362,7 +363,7 @@ var width =
                     </div>
                 </section>
                 <section>
-                    <h2>Not preloaded</h2>
+                    <h1>Not preloaded</h1>
                     <ul>
                         <li>&lt;input type=image&gt;</li>
                         <li>&lt;iframe&gt;</li>
@@ -373,10 +374,10 @@ var width =
                     </ul>
                 </section>
                 <section>
-                    <h2>CSS based resources</h2>
+                    <h1>CSS based resources</h1>
                 </section>
                 <section>
-                    <h2>JS based resources</h2>
+                    <h1>JS based resources</h1>
                 </section>
                 <section data-background="cc_resources/priority.jpg">
                     <h1 class="dark" style="width: 500px; margin: auto; padding-bottom: 10px;">Priorities</h1>
@@ -391,7 +392,7 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Based on context</h2>
+                    <h1>Based on context</h1>
                     <ul>
                         <li>CSS</li>
                         <li>Scripts</li>
@@ -400,7 +401,7 @@ var width =
                     </ul>
                 </section>
                 <section>
-                    <h2>&lt;head&gt; first</h2>
+                    <h1>&lt;head&gt; first</h1>
                     <aside class="notes">
                         Render blocking resources in the head are being downloaded first, at least in Chromium.
                     </aside>
@@ -424,17 +425,17 @@ var width =
                     <h1 class=bright style="width: 400px;margin: auto;">After</h1>
                 </section>
                 <section>
-                    <h2>20% on average</h2>
+                    <h1>20% on average</h1>
                     <div class="credits bottom">Source: <a href="https://plus.google.com/+IlyaGrigorik/posts/8AwRUE7wqAE">https://plus.google.com/+IlyaGrigorik/posts/8AwRUE7wqAE</a>
                     <aside class="notes">
                         20% improvements across the board: load time, domContentLoaded and speedIndex
                     </aside>
                 </section>
                 <section>
-                    <h2>&lt;advice&gt;</h2>
+                    <h1>&lt;advice&gt;</h1>
                 </section>
                 <section>
-                    <h2>Critical resources must be in markup</h2>
+                    <h1>Critical resources must be in markup</h1>
                     <aside class="notes">
                         <p>Preloaders don't see into JS, and currently, not even into CSS</p>
                         <p>Resources that you want the preloader to pick up and download, should be in markup</p>
@@ -442,7 +443,7 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Non-critical resources... Maybe not</h2>
+                    <h1>Non-critical resources... Maybe not</h1>
                     <aside class="notes">
                         <p>If OTOH, you have resources that are not necessary to the initial page load, they must not be in markup</p>
                         <p>e.g. lazy loading, resp img solution, etc </p>
@@ -450,20 +451,20 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Scripts at the bottom may bubble up</h2>
+                    <h1>Scripts at the bottom may bubble up</h1>
                     <aside class="notes">
                         scripts at the bottom may get downloaded before images
                     </aside>
                 </section>
                 <section>
-                    <h2>Don't invalidate the DOM</h2>
+                    <h1>Don't invalidate the DOM</h1>
                     <pre><code>document.getElementByTagName("base").href=
     "http://DontDoThat.com"</code></pre>
                     <pre><code>&lt;script&gt;document.write("&lt;!--");&lt;/script&gt;
-&lt;div&gt;...</code></pre>
+&lt;img src&gt;...</code></pre>
                 </section>
                 <section>
-                    <h2>Set charset in HTTP headers</h2>
+                    <h1>Set charset in HTTP headers</h1>
                     <aside class="notes">
                         If the document charset is defined at a late stage, it can invalidate HTTP requests that already went out (IE only
                         ???)
@@ -471,14 +472,14 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Assume nothing about loading order</h2>
+                    <h1>Assume nothing about loading order</h1>
                     <aside class="notes">
                         <p>The network download order of a resource can and will change between browsers and browser versions.</p>
                         <p>Make your peace with it</p>
                     </aside>
                 </section>
                 <section>
-                    <h2>Don't rely on JS cookies</h2>
+                    <h1>Don't rely on JS cookies</h1>
                     <aside class="notes">
                         <p>If you're setting cookies in JS, you cannot expect them to be present in the same page load on all the
                         images.</p>
@@ -486,13 +487,13 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Use APIs that expose critical hidden resources</h2>
+                    <h1>Use APIs that expose critical hidden resources</h1>
                     <aside class="notes">
 			
                     </aside>
                 </section>
                 <section>
-                    <h2>FontLoad API</h2>
+                    <h1>FontLoad API</h1>
                     <pre><code>
 var f = new FontFace("newfont", 
                      "url(newfont.woff)", {});
@@ -504,37 +505,38 @@ f.load().then(function (fontFact) {
                     </aside>
                 </section>
                 <section>
-                    <h2>Resource hints</h2>
+                    <h1>Resource hints</h1>
                     <pre><code>
 &lt;link rel="preload" href="/assets/font.woff" 
       as="font"&gt;
-&lt;link rel="preconnect" href="http://thirdparty.com"&gt;
+&lt;link rel="preconnect" 
+      href="http://thirdparty.com"&gt;
                     </code></pre>
                 </section>
                 <section>
-                    <h2>Render blocking resources are bad, mmmmmkay?</h2>
+                    <h1>Render blocking resources are bad, mmmmmkay?</h1>
                     <aside class="notes">
                         <p>At least in Chromium, to avoid contention, the download happens in two phases.</p>
                         <p>The first phase downloads one low priority resource and the render blocking resources</p>
                     </aside>
                 </section>
                 <section>
-                    <h2>&lt;/advice&gt;</h2>
+                    <h1>&lt;/advice&gt;</h1>
                 </section>
                 <section>
-                    <h2>&lt;future???&gt; </h2>
+                    <h1>&lt;future???&gt; </h1>
                     <aside class="notes">
                         <p>Now let's talk about what can be improved in the preloader.</p>
                         <p>So it's more of a "possible future" or "future wherein someone will give me time to work on that"</p>
                     </aside>
                 </section>
                 <section>
-                    <h2>More resources</h2>
+                    <h1>More resources</h1>
                         <li>&lt;iframe&gt;</li>
                         <li>&lt;link rel=import&gt;</li>
                 </section>
                 <section>
-                    <h2>Better CSS support</h2>
+                    <h1>Better CSS support</h1>
                     <aside class="notes">
                         <p>Blink &amp; WebKit currently support @import fetching for internal style tags.</p>
                         <p>Other browsers should also support that</p>
@@ -542,19 +544,19 @@ f.load().then(function (fontFact) {
                     </aside>
                 </section>
                 <section>
-                    <h2>Fonts</h2>
+                    <h1>Fonts</h1>
                     <aside class="notes">
                         Being able to start download of Web fonts earlier can be a huge win for speed index and UX.
                     </aside>
                 </section>
                 <section>
-                    <h2>Background images</h2>
+                    <h1>Background images</h1>
                     <aside class="notes">
                         Background images can also be helpful if we could start them earlier, but to a lesser extent.
                     </aside>
                 </section>
                 <section>
-                    <h2>Resource priorities</h2>
+                    <h1>Resource priorities</h1>
                     <aside class="notes">
                         <p>There are currently 2 proposals for specs that manage the priorities of resources declared in markup</p>
                         <p>If either would get adoption, it'd enable the preloader to be smarter, and would enable devs to opt-out of the
@@ -562,35 +564,35 @@ f.load().then(function (fontFact) {
                     </aside>
                 </section>
                 <section>
-                    <h2>&lt;/future&gt;</h2>
+                    <h1>&lt;/future&gt;</h1>
                 </section>
                 <section>
-                    <h2>Speaking of the future</h2>
+                    <h1>Speaking of the future</h1>
                 </section>
                 <section>
-                    <h2>HTTP2?</h2>
+                    <h1>HTTP2?</h1>
                 </section>
                 <section>
-                    <h2>No load queue</h2>
+                    <h1>No load queue</h1>
                 </section>
                 <section>
-                    <h2>Priorities sent to the server</h2>
+                    <h1>Priorities sent to the server</h1>
                     <aside class="notes">
                         <p>You could claim that detecting resources (and their priorities) as fast as possible becomes even more important</p>
                         <p>No contention avoidance</p>
                     </aside>
                 </section>
                 <section>
-                    <h2>Server push tho</h2>
+                    <h1>Server push tho</h1>
                     <aside class="notes">
                         For first party resources, you could also claim that server push makes all that obsolete
                     </aside>
                 </section>
                 <section>
-                    <h2>Time will tell</h2>
+                    <h1>Time will tell</h1>
                 </section>
                 <section>
-                    <h2>To sum it up</h2>
+                    <h1>To sum it up</h1>
                     <aside class="notes">
                         <p>The preloader is an extremely important browser optimizations</p>
                         <p>Developers should be aware of it, and work with it, rather than against it</p>
