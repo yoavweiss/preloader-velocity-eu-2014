@@ -76,8 +76,10 @@
                 </section>
                 <section>
                     <h2>What will we be talking about?</h2>
+                </section>
+                <section>
+                    <h1>Preloaders!</h1>
                     <aside class="notes">
-                        <p>Preloaders!!!</p>
                         <p> I've been working on Web performance stuff for the last 15 years and on 
                         responsive images implementation in Blink &amp; WebKit in the last 2 years.</p>
                         <p>The reason that I'm talking about it is that when I was talking about responsive images in last year's velocity, and asked the audience "who knows what is
@@ -277,8 +279,8 @@ document.body.appendChild(p); </code></pre>
                 </section>
                 <section>
                     <h2>document.write</h2>
-                    <pre><code>&lt;script&gt;document.write("&lt;!--");&lt;/script&gt;
-&lt;div&gt;...</code></pre>
+                    <pre><code>&lt;script&gt;document.write("This goes right before bla");&lt;/script&gt;
+&lt;div id=bla&gt;...</code></pre>
                     <aside class="notes">
                         scripts can alter the HTML, which means creating the "future" DOM may become irrelevant
                     </aside>
@@ -448,9 +450,17 @@ var width =
                     </aside>
                 </section>
                 <section>
+                    <h2>Scripts at the bottom may bubble up</h2>
+                    <aside class="notes">
+                        scripts at the bottom may get downloaded before images
+                    </aside>
+                </section>
+                <section>
                     <h2>Don't invalidate the DOM</h2>
                     <pre><code>document.getElementByTagName("base").href=
     "http://DontDoThat.com"</code></pre>
+                    <pre><code>&lt;script&gt;document.write("&lt;!--");&lt;/script&gt;
+&lt;div&gt;...</code></pre>
                 </section>
                 <section>
                     <h2>Set charset in HTTP headers</h2>
@@ -468,19 +478,11 @@ var width =
                     </aside>
                 </section>
                 <section>
-                    <h2>Assumption fail #1</h2>
-                    Setting cookies with JS
+                    <h2>Don't rely on JS cookies</h2>
                     <aside class="notes">
                         <p>If you're setting cookies in JS, you cannot expect them to be present in the same page load on all the
                         images.</p>
                         <p>They may be set of some but not for others.</p>
-                    </aside>
-                </section>
-                <section>
-                    <h2>Assumption fail #2</h2>
-                    Scripts at the bottom
-                    <aside class="notes">
-                        scripts at the bottom may get downloaded before images
                     </aside>
                 </section>
                 <section>
